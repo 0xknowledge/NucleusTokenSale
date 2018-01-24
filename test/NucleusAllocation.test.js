@@ -79,7 +79,16 @@ contract("NucleusAllocation", function(accounts) {
 	const balance = await this.token.balanceOf(accounts[0]);
 	balance.should.be.bignumber.equal(10);
     });
-    
+
+    it('cannot mint after finishAllocation is called', async function() {
+	await this.allocation.mintTokens(accounts[0], 10);
+	const balance = await this.token.balanceOf(accounts[0]);
+	balance.should.be.bignumber.equal(10);
+
+	await this.allocation.finishAllocation();
+	await this.allocation.mintTokens(accounts[1], 10).should.be.rejectedWith('revert');
+    });
+
     it('airdrop balance should reflect immediately', async function() {
 	await this.allocation.mintAirDropTokens(2, [accounts[0], accounts[1], accounts[2]]);
 	for (var i = 0; i < 3; i++) {

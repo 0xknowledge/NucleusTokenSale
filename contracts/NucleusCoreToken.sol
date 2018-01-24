@@ -12,6 +12,13 @@ contract NucleusCoreToken is StandardToken, Ownable {
   string public constant name = 'NucleusCore';
   string public constant symbol = 'nCore';
   uint8 public constant decimals = 0;
+  bool public mintingFinished = false;
+
+  event MintFinished();
+  modifier canMint() {
+    require(!mintingFinished);
+    _;
+  }
 
   /**
    * @dev totalSupply is not set as we don't know how many investors will get the core token
@@ -23,7 +30,7 @@ contract NucleusCoreToken is StandardToken, Ownable {
    * @dev Function to mint tokens
    * @param recipients The list of addresses eligible to get a NucleusCoreToken
    */
-  function mint(address[] recipients) onlyOwner {
+  function mint(address[] recipients) onlyOwner canMint public {
     uint newRecipients = 0;
     for( uint i = 0 ; i < recipients.length ; i++ ){
       address recipient = recipients[i];
@@ -37,6 +44,14 @@ contract NucleusCoreToken is StandardToken, Ownable {
     totalSupply = totalSupply.add(newRecipients);
   }
 
+  /**
+   * @dev Function to end minting process
+   */
+  function endMinting() onlyOwner canMint public {
+    mintingFinished = true;
+    MintFinished();
+  }
+  
   // nCore tokens are not transferrable
   function transfer(address _to, uint _value) returns (bool){ revert(); }
   function transferFrom(address _from, address _to, uint _value) returns (bool){ revert(); }
