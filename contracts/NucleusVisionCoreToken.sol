@@ -4,12 +4,12 @@ import "zeppelin-solidity/contracts/token/StandardToken.sol";
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 
 /**
- * @title NucleusCoreToken
- * @dev NucleusCoreToken (ERC20) contract defining basic parameters of a ERC20 Token
+ * @title NucleusVisionCoreToken
+ * @dev NucleusVisionCoreToken (ERC20) contract defining basic parameters of a ERC20 Token
  */
 
-contract NucleusCoreToken is StandardToken, Ownable {
-  string public constant name = 'NucleusCore';
+contract NucleusVisionCoreToken is StandardToken, Ownable {
+  string public constant name = 'NucleusVisionCore';
   string public constant symbol = 'nCore';
   uint8 public constant decimals = 0;
   bool public mintingFinished = false;
@@ -23,12 +23,12 @@ contract NucleusCoreToken is StandardToken, Ownable {
   /**
    * @dev totalSupply is not set as we don't know how many investors will get the core token
    */
-  function NucleusCoreToken() public {
+  function NucleusVisionCoreToken() public {
   }
 
   /**
    * @dev Function to mint tokens
-   * @param recipients The list of addresses eligible to get a NucleusCoreToken
+   * @param recipients The list of addresses eligible to get a NucleusVisionCoreToken
    */
   function mint(address[] recipients) onlyOwner canMint public {
     uint newRecipients = 0;

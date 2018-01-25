@@ -1,8 +1,8 @@
-const NucleusCoreToken = artifacts.require("NucleusCoreToken");
+const NucleusVisionCoreToken = artifacts.require("NucleusVisionCoreToken");
 
-contract("NucleusCoreToken", function(accounts) {
+contract("NucleusVisionCoreToken", function(accounts) {
     beforeEach(async function() {
-	this.token = await NucleusCoreToken.new();
+	this.token = await NucleusVisionCoreToken.new();
     });
   
     it("should have total supply of 10 nCore tokens", async function() {

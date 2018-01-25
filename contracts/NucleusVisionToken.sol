@@ -4,12 +4,12 @@ import "zeppelin-solidity/contracts/token/MintableToken.sol";
 import "zeppelin-solidity/contracts/lifecycle/Pausable.sol";
 
 /**
- * @title NucleusToken
- * @dev NucleusToken (ERC20) contract defining basic parameters of a ERC20 Token
+ * @title NucleusVisionToken
+ * @dev NucleusVisionToken (ERC20) contract defining basic parameters of a ERC20 Token
  */
 
-contract NucleusToken is MintableToken, Pausable {
-  string public constant name = 'Nucleus';
+contract NucleusVisionToken is MintableToken, Pausable {
+  string public constant name = 'NucleusVision';
   string public constant symbol = 'nCash';
   uint8 public constant decimals = 18;
 
@@ -19,7 +19,7 @@ contract NucleusToken is MintableToken, Pausable {
   /**
    * @dev totalSupply is set via the minting process
    */
-  function NucleusToken() public {
+  function NucleusVisionToken() public {
   }
   
 }

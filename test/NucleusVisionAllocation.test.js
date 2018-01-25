@@ -1,7 +1,7 @@
 const BigNumber = web3.BigNumber;
 
-const NucleusToken = artifacts.require("NucleusToken");
-const NucleusAllocation = artifacts.require("NucleusAllocation");
+const NucleusVisionToken = artifacts.require("NucleusVisionToken");
+const NucleusVisionAllocation = artifacts.require("NucleusVisionAllocation");
 const TokenVesting = artifacts.require("TokenVesting");
 
 require('chai')
@@ -62,11 +62,11 @@ function sleep (ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-contract("NucleusAllocation", function(accounts) {
+contract("NucleusVisionAllocation", function(accounts) {
     
     beforeEach(async function () {
-	this.allocation = await NucleusAllocation.new();
-	this.token = NucleusToken.at(await this.allocation.token());
+	this.allocation = await NucleusVisionAllocation.new();
+	this.token = NucleusVisionToken.at(await this.allocation.token());
     });
 
     it('should be token owner', async function() {
