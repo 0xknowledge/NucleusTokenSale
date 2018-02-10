@@ -70,8 +70,10 @@ contract("NucleusVisionAllocation", function(accounts) {
   });
 
   it('should be token owner', async function() {
-    const owner = await this.token.owner();
-    owner.should.equal(this.allocation.address);
+    const allocation_owner = await this.allocation.owner();
+    allocation_owner.should.equal(accounts[0]);
+    const token_owner = await this.token.owner();
+    token_owner.should.equal(this.allocation.address);
   });
 
   it('minted balance should reflect immediately', async function() {

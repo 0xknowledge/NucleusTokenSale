@@ -5,6 +5,11 @@ contract("NucleusVisionCoreToken", function(accounts) {
     this.token = await NucleusVisionCoreToken.new();
   });
 
+  it("should have the right owner", async function() {
+    const owner = await this.token.owner();
+    owner.should.equal(accounts[0]);
+  });
+
   it("should have total supply of 10 nCore tokens", async function() {
     await this.token.mint(accounts);
     var totalSupply = await this.token.totalSupply();

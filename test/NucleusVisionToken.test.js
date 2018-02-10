@@ -14,6 +14,11 @@ contract("NucleusVisionToken", function(accounts) {
     this.token = await NucleusVisionToken.new();
   });
 
+  it("should have the right owner", async function() {
+    const owner = await this.token.owner();
+    owner.should.equal(accounts[0]);
+  });
+
   it("should have total supply of 10 billion nCash tokens", async function() {
     await this.token.mint(accounts[0], DecimalsFormat(Billion(10)));
     var totalSupply = await this.token.totalSupply();
