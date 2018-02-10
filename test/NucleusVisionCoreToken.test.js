@@ -16,13 +16,24 @@ contract("NucleusVisionCoreToken", function(accounts) {
     totalSupply.should.be.bignumber.equal(10, "total supply is not 10");
   });
 
-  it ("cannot mint once finish mint is called", async function() {
+  it("cannot mint once finish mint is called", async function() {
     await this.token.mint([accounts[0]])
     const balance = await this.token.balanceOf(accounts[0]);
     balance.should.be.bignumber.equal(1);
 
     await this.token.endMinting();
     await this.token.mint([accounts[1]]).should.be.rejectedWith('revert');
+  });
+
+  it("token ownership cannot be changed", async function() {
+    await this.token.mint([accounts[0]])
+    const balance = await this.token.balanceOf(accounts[0]);
+    balance.should.be.bignumber.equal(1);
+
+    await this.token.transfer(accounts[1], 1, {from: accounts[0]}).should.be.rejectedWith('revert');
+    await this.token.approve(accounts[1], 1, {from: accounts[0]}).should.be.rejectedWith('revert');
+    await this.token.transferFrom(accounts[0], accounts[1], 1, {from: accounts[0]}).should.be.rejectedWith('revert');
+    assert.equal(await this.token.allowance(accounts[0], accounts[1]), 0)
   });
 
 });
