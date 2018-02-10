@@ -2,6 +2,7 @@ pragma solidity ^0.4.18;
 
 import "zeppelin-solidity/contracts/token/MintableToken.sol";
 import "zeppelin-solidity/contracts/lifecycle/Pausable.sol";
+import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 
 /**
  * @title NucleusVisionToken
@@ -21,5 +22,10 @@ contract NucleusVisionToken is MintableToken, Pausable {
    */
   function NucleusVisionToken() public {
   }
-  
+
+  function mint(address to, uint256 amount) onlyOwner public returns (bool) {
+    require(totalSupply + amount <= TOTAL_SUPPLY);
+    super.mint(to, amount);
+  }
+
 }
