@@ -25,7 +25,7 @@ contract NucleusVisionToken is MintableToken, Pausable {
 
   function mint(address to, uint256 amount) onlyOwner public returns (bool) {
     require(totalSupply + amount <= TOTAL_SUPPLY);
-    super.mint(to, amount);
+    return super.mint(to, amount);
   }
 
 }

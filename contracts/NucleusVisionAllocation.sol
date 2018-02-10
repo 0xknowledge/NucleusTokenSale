@@ -54,7 +54,7 @@ contract NucleusVisionAllocation is Ownable {
     require(beneficiary != 0x0);
     require(tokens > 0);
 
-    token.mint(beneficiary, tokens);
+    require(token.mint(beneficiary, tokens));
     NucleusVisionTokensMinted(beneficiary, tokens);
   }
 
@@ -62,32 +62,32 @@ contract NucleusVisionAllocation is Ownable {
   function mintTokensWithTimeBasedVesting(address beneficiary, uint256 tokens, uint256 start, uint256 cliff, uint256 duration) public onlyOwner {
     require(beneficiary != 0x0);
     require(tokens > 0);
-    
+
     vesting[beneficiary] = new TokenVesting(beneficiary, start, cliff, duration, false);
-    token.mint(address(vesting[beneficiary]), tokens);
-    
+    require(token.mint(address(vesting[beneficiary]), tokens));
+
     NucleusVisionTimeVestingTokensMinted(beneficiary, tokens, start, cliff, duration);
   }
 
   function mintAirDropTokens(uint256 tokens, address[] addresses) public onlyOwner {
     require(tokens > 0);
     for (uint256 i = 0; i < addresses.length; i++) {
-      token.mint(addresses[i], tokens);
+      require(token.mint(addresses[i], tokens));
       NucleusVisionAirDropTokensMinted(addresses[i], tokens);
     }
   }
 
   // member function to finish the minting process
   function finishAllocation() public onlyOwner {
-    token.finishMinting();
+    require(token.finishMinting());
   }
 
   // member function that can be called to release vested tokens periodically
   function releaseVestedTokens(address beneficiary) public {
     require(beneficiary != 0x0);
-    
+
     TokenVesting tokenVesting = vesting[beneficiary];
     tokenVesting.release(token);
   }
-    
+
 }
