@@ -99,6 +99,34 @@ contract("NucleusVisionAllocation", function(accounts) {
     }
   });
 
+  it('unvested balance cannot be transferred', async function() {
+    const vestingStart = latestTime() + duration.minutes(1);
+    const vestingCliff = duration.days(1);
+    const vestingDuration = duration.days(4);
+
+    await this.allocation.mintTokensWithTimeBasedVesting(accounts[0], 100, vestingStart, vestingCliff, vestingDuration)
+    var vesting_contract = TokenVesting.at(await this.allocation.vesting(accounts[0]));
+    // cannot transfer unvested tokens
+    await this.token.transfer(accounts[1], 25, {from: accounts[0]}).should.be.rejectedWith('revert');
+
+    // vesting still won't happen until release() is called
+    await increaseTime(duration.days(1) + duration.minutes(1));
+    await advanceBlock();
+    await this.token.transfer(accounts[1], 25, {from: accounts[0]}).should.be.rejectedWith('revert');
+
+    // checking if transferrable tokens are restricted to vested one
+    await vesting_contract.release(this.token.address)
+    await this.token.transfer(accounts[1], 35, {from: accounts[0]}).should.be.rejectedWith('revert');
+
+    // vested balance can be transferred
+    await this.token.transfer(accounts[1], 25, {from: accounts[0]});
+    var balance = 0;
+    balance = await this.token.balanceOf(accounts[0]);
+    balance.should.be.bignumber.equal(0);
+    balance = await this.token.balanceOf(accounts[1]);
+    balance.should.be.bignumber.equal(25);
+  });
+
   it('vested balance should be reflected over time', async function() {
     const vestingStart = latestTime() + duration.minutes(1);
     const vestingCliff = duration.days(1);
