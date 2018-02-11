@@ -1,8 +1,6 @@
-var Migrations = artifacts.require("./Migrations.sol");
-var NucleusVisionToken = artifacts.require("../contracts/NucleusVisionToken.sol");
-var NucleusVisionAllocation = artifacts.require("../contracts/NucleusVisionAllocation.sol");
+var Migrations = artifacts.require("Migrations");
 
 module.exports = function(deployer) {
-    deployer.deploy(Migrations);
-    deployer.deploy(NucleusVisionToken);
+  // Deploy the Migrations contract as our only task
+  deployer.deploy(Migrations);
 };
