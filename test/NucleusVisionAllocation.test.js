@@ -76,6 +76,21 @@ contract("NucleusVisionAllocation", function(accounts) {
     token_owner.should.equal(this.allocation.address);
   });
 
+  it('token ownership can be transferred after minting', async function() {
+    const token_owner = await this.token.owner();
+    token_owner.should.equal(this.allocation.address);
+
+    await this.allocation.mintTokens(accounts[0], 10);
+    await this.allocation.mintTokens(accounts[1], 10);
+    await this.allocation.mintTokens(accounts[2], 10);
+    await this.allocation.transferTokenOwnership(accounts[3]).should.be.rejectedWith('revert');
+    await this.allocation.finishAllocation();
+    await this.allocation.transferTokenOwnership(accounts[3]);
+
+    const new_token_owner = await this.token.owner();
+    new_token_owner.should.equal(accounts[3]);
+  });
+
   it('minted balance should reflect immediately', async function() {
     await this.allocation.mintTokens(accounts[0], 10);
     const balance = await this.token.balanceOf(accounts[0]);
@@ -172,4 +187,5 @@ contract("NucleusVisionAllocation", function(accounts) {
     balance = await this.token.balanceOf(accounts[0]);
     balance.should.be.bignumber.equal(70);
   });
+
 });

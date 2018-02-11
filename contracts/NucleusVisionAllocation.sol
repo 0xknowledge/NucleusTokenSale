@@ -90,4 +90,9 @@ contract NucleusVisionAllocation is Ownable {
     tokenVesting.release(token);
   }
 
+  // transfer token ownership after allocation
+  function transferTokenOwnership(address owner) public onlyOwner {
+    require(token.mintingFinished());
+    token.transferOwnership(owner);
+  }
 }
