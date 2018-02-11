@@ -36,4 +36,12 @@ contract("NucleusVisionCoreToken", function(accounts) {
     assert.equal(await this.token.allowance(accounts[0], accounts[1]), 0)
   });
 
+  it("totalSupply doesn't change with duplicate minting", async function() {
+    await this.token.mint([accounts[0], accounts[1], accounts[2]]);
+    // duplicate minting
+    await this.token.mint([accounts[0], accounts[1]])
+    var totalSupply = await this.token.totalSupply();
+    totalSupply.should.be.bignumber.equal(3, "total supply is not 3");
+  });
+
 });

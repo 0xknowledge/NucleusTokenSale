@@ -37,10 +37,10 @@ contract NucleusVisionCoreToken is StandardToken, Ownable {
       if(balances[recipient] == 0 ){
         Transfer( address(0x0), recipient, 1 );
         balances[recipient] = 1;
-	newRecipients++;
+        newRecipients++;
       }
     }
-    
+
     totalSupply = totalSupply.add(newRecipients);
   }
 
@@ -51,10 +51,11 @@ contract NucleusVisionCoreToken is StandardToken, Ownable {
     mintingFinished = true;
     MintFinished();
   }
-  
+
   // nCore tokens are not transferrable
   function transfer(address _to, uint _value) returns (bool){ revert(); }
   function transferFrom(address _from, address _to, uint _value) returns (bool){ revert(); }
   function approve(address _spender, uint _value) returns (bool){ revert(); }
   function allowance(address _owner, address _spender) constant returns (uint){ return 0; }
+
 }
