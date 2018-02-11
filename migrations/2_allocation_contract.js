@@ -88,6 +88,6 @@ async function liveDeploy(deployer, accounts) {
     const token = NucleusVisionToken.at(await contract.token());
     const totalSupply = await token.totalSupply();
 
-    console.log("Total tokens minted: ", totalSupply);
+    console.log("Total tokens minted: ", totalSupply.toString());
   });
 }
