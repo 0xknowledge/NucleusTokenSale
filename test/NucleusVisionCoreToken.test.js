@@ -11,22 +11,22 @@ contract("NucleusVisionCoreToken", function(accounts) {
   });
 
   it("should have total supply of 10 nCore tokens", async function() {
-    await this.token.mint(accounts);
+    await this.token.mintCoreToken(accounts);
     var totalSupply = await this.token.totalSupply();
     totalSupply.should.be.bignumber.equal(10, "total supply is not 10");
   });
 
   it("cannot mint once finish mint is called", async function() {
-    await this.token.mint([accounts[0]])
+    await this.token.mintCoreToken([accounts[0]])
     const balance = await this.token.balanceOf(accounts[0]);
     balance.should.be.bignumber.equal(1);
 
-    await this.token.endMinting();
-    await this.token.mint([accounts[1]]).should.be.rejectedWith('revert');
+    await this.token.finishMinting();
+    await this.token.mintCoreToken([accounts[1]]).should.be.rejectedWith('revert');
   });
 
   it("token ownership cannot be changed", async function() {
-    await this.token.mint([accounts[0]])
+    await this.token.mintCoreToken([accounts[0]])
     const balance = await this.token.balanceOf(accounts[0]);
     balance.should.be.bignumber.equal(1);
 
@@ -37,9 +37,9 @@ contract("NucleusVisionCoreToken", function(accounts) {
   });
 
   it("totalSupply doesn't change with duplicate minting", async function() {
-    await this.token.mint([accounts[0], accounts[1], accounts[2]]);
+    await this.token.mintCoreToken([accounts[0], accounts[1], accounts[2]]);
     // duplicate minting
-    await this.token.mint([accounts[0], accounts[1]])
+    await this.token.mintCoreToken([accounts[0], accounts[1]])
     var totalSupply = await this.token.totalSupply();
     totalSupply.should.be.bignumber.equal(3, "total supply is not 3");
   });
