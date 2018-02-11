@@ -14,6 +14,17 @@ contract("NucleusVisionToken", function(accounts) {
     this.token = await NucleusVisionToken.new();
   });
 
+  it("token metadata is correct", async function() {
+    const name = await this.token.name();
+    name.should.equal('NucleusVision');
+
+    const symbol = await this.token.symbol();
+    symbol.should.equal('nCash');
+
+    const decimals = await this.token.decimals();
+    assert.equal(decimals, 18);
+  });
+
   it("should have the right owner", async function() {
     const owner = await this.token.owner();
     owner.should.equal(accounts[0]);
