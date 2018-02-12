@@ -10,8 +10,8 @@ import "zeppelin-solidity/contracts/ownership/Ownable.sol";
  */
 
 contract NucleusVisionToken is MintableToken {
-  string public constant name = 'NucleusVision';
-  string public constant symbol = 'nCash';
+  string public constant name = "NucleusVision";
+  string public constant symbol = "nCash";
   uint8 public constant decimals = 18;
 
   // Total supply of nCash tokens is 10 Billion

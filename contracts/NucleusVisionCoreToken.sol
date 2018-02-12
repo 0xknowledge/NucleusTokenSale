@@ -9,8 +9,8 @@ import "zeppelin-solidity/contracts/ownership/Ownable.sol";
  */
 
 contract NucleusVisionCoreToken is MintableToken {
-  string public constant name = 'NucleusVisionCore';
-  string public constant symbol = 'nCore';
+  string public constant name = "NucleusVisionCore";
+  string public constant symbol = "nCore";
   uint8 public constant decimals = 0;
 
   /**
