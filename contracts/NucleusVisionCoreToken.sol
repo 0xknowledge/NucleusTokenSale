@@ -24,7 +24,6 @@ contract NucleusVisionCoreToken is MintableToken {
    * @param recipients The list of addresses eligible to get a NucleusVisionCoreToken
    */
   function mintCoreToken(address[] recipients) onlyOwner public {
-    uint newRecipients = 0;
     for( uint i = 0 ; i < recipients.length ; i++ ){
       address recipient = recipients[i];
       if(balances[recipient] == 0 ){
