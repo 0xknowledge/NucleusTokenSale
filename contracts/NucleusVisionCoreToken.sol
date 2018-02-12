@@ -33,9 +33,9 @@ contract NucleusVisionCoreToken is MintableToken {
   }
 
   // nCore tokens are not transferrable
-  function transfer(address _to, uint _value) returns (bool){ revert(); }
-  function transferFrom(address _from, address _to, uint _value) returns (bool){ revert(); }
-  function approve(address _spender, uint _value) returns (bool){ revert(); }
-  function allowance(address _owner, address _spender) constant returns (uint){ return 0; }
+  function transfer(address, uint) public returns (bool){ revert(); }
+  function transferFrom(address, address, uint) public returns (bool){ revert(); }
+  function approve(address, uint) public returns (bool){ revert(); }
+  function allowance(address, address) constant public returns (uint){ return 0; }
 
 }
