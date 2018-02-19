@@ -120,6 +120,8 @@ contract("NucleusVisionAllocation", function(accounts) {
     const vestingDuration = duration.days(4);
 
     await this.allocation.mintTokensWithTimeBasedVesting(accounts[0], 100, vestingStart, vestingCliff, vestingDuration)
+    await this.allocation.unlockToken();
+
     var vesting_contract = TokenVesting.at(await this.allocation.vesting(accounts[0]));
     // cannot transfer unvested tokens
     await this.token.transfer(accounts[1], 25, {from: accounts[0]}).should.be.rejectedWith('revert');
@@ -148,6 +150,8 @@ contract("NucleusVisionAllocation", function(accounts) {
     const vestingDuration = duration.days(4);
 
     await this.allocation.mintTokensWithTimeBasedVesting(accounts[0], 100, vestingStart, vestingCliff, vestingDuration)
+    await this.allocation.unlockToken();
+
     var vesting_contract = TokenVesting.at(await this.allocation.vesting(accounts[0]));
     var balance = 0;
 

@@ -16,6 +16,10 @@ contract NucleusVisionToken is MintableToken {
 
   // Total supply of nCash tokens is 10 Billion
   uint256 public constant MAX_SUPPLY = 10 * 1000 * 1000 * 1000 * (10 ** uint256(decimals));
+  // Bit that controls whether the token can be transferred / traded
+  bool public unlocked = false;
+
+  event NucleusVisionTokenUnlocked();
 
   /**
    * @dev totalSupply is set via the minting process
@@ -26,6 +30,39 @@ contract NucleusVisionToken is MintableToken {
   function mint(address to, uint256 amount) onlyOwner public returns (bool) {
     require(totalSupply + amount <= MAX_SUPPLY);
     return super.mint(to, amount);
+  }
+
+  function unlockToken() onlyOwner public {
+    require (!unlocked);
+    unlocked = true;
+    NucleusVisionTokenUnlocked();
+  }
+
+  // Overriding basic ERC-20 specification that lets people transfer/approve tokens.
+  function transfer(address to, uint256 value) public returns (bool) {
+    require(unlocked);
+    return super.transfer(to, value);
+  }
+
+  function transferFrom(address from, address to, uint256 value) public returns (bool) {
+    require(unlocked);
+    return super.transferFrom(from, to, value);
+  }
+
+  function approve(address spender, uint256 value) public returns (bool) {
+    require(unlocked);
+    return super.approve(spender, value);
+  }
+
+  // Overriding StandardToken functions that lets people transfer/approve tokens.
+  function increaseApproval(address spender, uint addedValue) public returns (bool) {
+    require(unlocked);
+    return super.increaseApproval(spender, addedValue);
+  }
+
+  function decreaseApproval(address spender, uint subtractedValue) public returns (bool) {
+    require(unlocked);
+    return super.decreaseApproval(spender, subtractedValue);
   }
 
 }

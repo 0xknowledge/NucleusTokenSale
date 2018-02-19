@@ -82,6 +82,11 @@ contract NucleusVisionAllocation is Ownable {
     require(token.finishMinting());
   }
 
+  // member function to unlock token for trading
+  function unlockToken() public onlyOwner {
+    token.unlockToken();
+  }
+
   // member function that can be called to release vested tokens periodically
   function releaseVestedTokens(address beneficiary) public {
     require(beneficiary != 0x0);
