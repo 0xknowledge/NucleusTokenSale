@@ -74,6 +74,10 @@ contract("NucleusVisionAirDrop", function(accounts) {
 
     balance = await this.token.balanceOf(this.airdrop.address);
     balance.should.be.bignumber.equal(70);
+
+    await this.airdrop.revokeBalance(this.token.address, accounts[5]);
+    balance = await this.token.balanceOf(accounts[5]);
+    balance.should.be.bignumber.equal(70);
   });
 
 });

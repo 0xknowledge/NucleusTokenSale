@@ -16,4 +16,9 @@ contract NucleusVisionAirDrop is Ownable {
     }
   }
 
+  function revokeBalance(address token_address, address recipient) onlyOwner public {
+    NucleusVisionToken token = NucleusVisionToken(token_address);
+    uint256 balance = token.balanceOf(this);
+    require(token.transfer(recipient, balance));
+  }
 }
