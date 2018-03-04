@@ -8,10 +8,11 @@ contract NucleusVisionAirDrop is Ownable {
   function NucleusVisionAirDrop() public {
   }
 
-  function batchAirDrop(NucleusVisionToken token, address[] recipients, uint256 ncash) onlyOwner public {
+  function batchAirDrop(address token_address, address[] recipients, uint256 ncash) onlyOwner public {
+    NucleusVisionToken token = NucleusVisionToken(token_address);
     for(uint i = 0 ; i < recipients.length ; i++) {
       address recipient = recipients[i];
-      token.transfer(recipient, ncash);
+      require(token.transfer(recipient, ncash));
     }
   }
 
